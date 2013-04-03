@@ -453,6 +453,19 @@ one model in to the collection of item views.
 When a model is removed from a collection (or destroyed / deleted), the collection
 view will close and remove that model's item view.
 
+### Filtering items
+
+Sometimes you only want to listen the "add" and "remove" events for some given items.
+You can implement the `filterItem` to achieve that:
+
+```js
+var CV = Marionette.CollectionView.extend({
+  filterItem: function (item, collection) {
+    return item.get('project_id') === 3
+  }
+});
+```
+
 ## CollectionView: Re-render Collection
 
 If you need to re-render the entire collection, you can call the

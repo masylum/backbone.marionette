@@ -28,8 +28,15 @@ Marionette.CollectionView = Marionette.View.extend({
     }
   },
 
+  // Implement this method if you need item filtering
+  // for a given collection
+  filterItem: function(item, collection){
+    return true;
+  },
+
   // Handle a child item added to the collection
   addChildView: function(item, collection, options){
+    if (!this.filterCollection(item, collection)){ return; }
     this.closeEmptyView();
     var ItemView = this.getItemView(item);
     var index = this.collection.indexOf(item);
@@ -194,6 +201,7 @@ Marionette.CollectionView = Marionette.View.extend({
 
   // get the child view by item it holds, and remove it
   removeItemView: function(item){
+    if (!this.filterCollection(item, collection)){ return; }
     var view = this.children.findByModel(item);
     this.removeChildView(view);
     this.checkEmpty();
